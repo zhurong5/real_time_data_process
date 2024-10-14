@@ -11,8 +11,8 @@ public class MemberController {
 	@GetMapping("memberList")
 	public String list() {
 		
-		return "thymeleaf/member/memberList"; // html 경로
-		//return "member/memberList"; // jsp 경로
+		return "thymeleaf/member/memberList"; // html경로
+		//return "member/memberList"; // jsp경로
 	}
 	
 	@GetMapping("memberWrite")
