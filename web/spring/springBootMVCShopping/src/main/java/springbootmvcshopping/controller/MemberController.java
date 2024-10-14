@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import springbootmvcshopping.command.MemberCommand;
+import springbootmvcshopping.service.AutoNumService;
 import springbootmvcshopping.service.member.MemberWriteService;
 
 @Controller
@@ -15,6 +16,8 @@ import springbootmvcshopping.service.member.MemberWriteService;
 public class MemberController {
 	@Autowired
 	MemberWriteService memberWriteService;
+	@Autowired
+	AutoNumService autoNumService;
 	
 	@GetMapping("memberList")
 	public String list() {
@@ -24,8 +27,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("memberWrite")
-	public String write() {
-		
+	public String write(Model model) {
+		autoNumService.execute(model, "mem_", "member_num", 4, "members");
 		return "thymeleaf/member/memberForm";
 		//return "member/memberForm";
 	}
