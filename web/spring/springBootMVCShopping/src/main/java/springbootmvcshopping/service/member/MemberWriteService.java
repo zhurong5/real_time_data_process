@@ -1,6 +1,7 @@
 package springbootmvcshopping.service.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import springbootmvcshopping.command.MemberCommand;
@@ -11,6 +12,9 @@ import springbootmvcshopping.mapper.MemberMapper;
 public class MemberWriteService {
 	@Autowired
 	MemberMapper memberMapper;
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	public void execute(MemberCommand memberCommand) {
 		MemberDTO dto = new MemberDTO();
 		dto.setGender(memberCommand.getGender());
@@ -24,7 +28,9 @@ public class MemberWriteService {
 		dto.setMemberPhone1(memberCommand.getMemberPhone1());
 		dto.setMemberPhone2(memberCommand.getMemberPhone2());
 		dto.setMemberPost(memberCommand.getMemberPost());
-		dto.setMemberPw(memberCommand.getMemberPw());
+		// encode: 암호화
+		String encodePw = passwordEncoder.encode(memberCommand.getMemberPw());
+		dto.setMemberPw(encodePw);
 		memberMapper.memberInsert(dto);
 	}
 }
