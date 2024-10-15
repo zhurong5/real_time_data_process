@@ -12,7 +12,7 @@ import springbootmvcshopping.mapper.MemberMapper;
 import springbootmvcshopping.service.StartEndPageService;
 
 @Service
-public class memberListService {
+public class MemberListService {
 	@Autowired
 	MemberMapper memberMapper;
 	@Autowired

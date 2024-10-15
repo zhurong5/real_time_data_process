@@ -9,4 +9,12 @@
 	from ${tableName}
 </select>
 
+<delete id="numsDelete">
+	delete from ${tableName}
+	where ${columnName} in
+		<foreach collection="nums" item="num" open="(" close=")" index="index"
+			separator=",">
+			#{num}
+		</foreach>
+</delete>
 </mapper>

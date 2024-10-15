@@ -9,22 +9,26 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import springbootmvcshopping.command.MemberCommand;
 import springbootmvcshopping.service.AutoNumService;
 import springbootmvcshopping.service.member.MemberWriteService;
-import springbootmvcshopping.service.member.memberListService;
+import springbootmvcshopping.service.member.MemberDeleteService;
+import springbootmvcshopping.service.member.MemberListService;
 
 @Controller
-@RequestMapping("member") // member/memberList 같이 절대주소로 쓰지 않아도 됨
+@RequestMapping("member") // 공통주소 처리
 public class MemberController {
 	@Autowired
 	MemberWriteService memberWriteService;
 	@Autowired
 	AutoNumService autoNumService;
 	@Autowired
-	memberListService memberListService;
+	MemberListService memberListService;
+	@Autowired
+	MemberDeleteService memberDeleteService;
 	
 	@GetMapping("memberList")
 	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
@@ -58,6 +62,11 @@ public class MemberController {
 			return "thymeleaf/member/memberForm";
 		}
 		memberWriteService.execute(memberCommand);
+		return "redirect:memberList";
+	}
+	@RequestMapping(value = "membersDelete")
+	public String memberDelete(@RequestParam("nums") String memberNums []) {
+		memberDeleteService.execute(memberNums);
 		return "redirect:memberList";
 	}
 }

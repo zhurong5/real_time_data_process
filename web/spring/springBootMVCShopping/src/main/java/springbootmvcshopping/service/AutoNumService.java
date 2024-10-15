@@ -17,4 +17,8 @@ public class AutoNumService {
 		String autoNum = autoNumMapper.autoNumselect(sep, columnName, len, tableName);
 		return autoNum;
 	}
+	
+	public void numsDelete(String nums[]) {
+		autoNumMapper.numsDelete(nums, "members", "member_num");
+	}
 }
