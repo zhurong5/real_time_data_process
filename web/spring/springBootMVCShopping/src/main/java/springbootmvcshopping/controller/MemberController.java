@@ -1,6 +1,7 @@
 package springbootmvcshopping.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,9 +27,10 @@ public class MemberController {
 	memberListService memberListService;
 	
 	@GetMapping("memberList")
-	public String list(@RequestParam(value = "searchWord", required = false) 
-			String searchWord, Model model) {
-		memberListService.execute(searchWord, model);
+	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
+	        		   @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+	        Model model) {
+		memberListService.execute(page, searchWord, model);
 		return "thymeleaf/member/memberList"; // html경로
 		//return "member/memberList"; // jsp경로
 	}

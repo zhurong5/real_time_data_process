@@ -23,15 +23,33 @@
 	, MEMBER_EMAIL, MEMBER_BIRTH, MEMBER_POINT
 </sql>
 
-<select id="memberSelectList" resultType="memberDTO">
-	select <include refid="memberBaseColumns"/>
+<select id="memberSelectList" resultType="memberDTO" parameterType="startEndPageDTO">
+	select *
+		from (select ROW_NUMBER() over (order by member_num ) as rn  
+	    ,<include refid="memberBaseColumns"/>
 	from members
-	<where>
+	<where> 
 		<if test="searchWord != null">
-			member_name like '%'||#{searchWord}||'%'
-			or member_id like '%'||#{searchWord}||'%'
-			or member_num like '%'||#{searchWord}||'%'
+			MEMBER_NAME like '%'||#{searchWord}||'%'
+			or MEMBER_ID like '%'||#{searchWord}||'%'
+			or MEMBER_NUM like '%'||#{searchWord}||'%'
 		</if>
 	</where>
+	)
+	where rn BETWEEN #{startRow} and #{endRow}
 </select>
+
+<select id="memberCount" resultType="integer">
+	select count(*) from members
+</select>
+
+
+
+
+
+
+
+
+
+
 </mapper>
