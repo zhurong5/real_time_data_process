@@ -32,7 +32,6 @@ public class MemberCommand {
 	@NotBlank(message = "전화번호를 입력해주세요")
 	@Size(min = 11, max = 23) // 길이 검사
 	String memberPhone1;
-	@Size(min = 11, max = 23)
 	String memberPhone2;
 	String gender;
 	@NotBlank(message = "이메일을 입력해주세요")
