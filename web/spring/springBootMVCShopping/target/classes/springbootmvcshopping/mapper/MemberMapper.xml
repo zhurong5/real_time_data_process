@@ -3,6 +3,7 @@
 	"-//mybatis.org//DTD MApper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="springbootmvcshopping.mapper.MemberMapper">
+
 <insert id="memberInsert" parameterType="memberDTO">
 	insert into members(MEMBER_NUM, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_ADDR
 					  ,MEMBER_ADDR_DETAIL, MEMBER_POST, MEMBER_REGIST, MEMBER_GENDER
@@ -13,4 +14,24 @@
 		  ,#{memberAddrDetail},#{memberPost},sysdate,#{gender}
 		  ,#{memberPhone1},#{memberPhone2},#{memberEmail},#{memberBirth},0)
 </insert>
+
+<sql id="memberBaseColumns">
+	MEMBER_NUM, MEMBER_NAME, MEMBER_ID, MEMBER_PW
+	, MEMBER_ADDR, MEMBER_ADDR_DETAIL, MEMBER_POST
+	, MEMBER_REGIST, MEMBER_GENDER
+	, MEMBER_PHONE1, MEMBER_PHONE2
+	, MEMBER_EMAIL, MEMBER_BIRTH, MEMBER_POINT
+</sql>
+
+<select id="memberSelectList" resultType="memberDTO">
+	select <include refid="memberBaseColumns"/>
+	from members
+	<where>
+		<if test="searchWord != null">
+			member_name like '%'||#{searchWord}||'%'
+			or member_id like '%'||#{searchWord}||'%'
+			or member_num like '%'||#{searchWord}||'%'
+		</if>
+	</where>
+</select>
 </mapper>
