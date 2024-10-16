@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import springbootmvcshopping.command.MemberCommand;
 import springbootmvcshopping.service.AutoNumService;
 import springbootmvcshopping.service.member.MemberWriteService;
 import springbootmvcshopping.service.member.MemberDeleteService;
+import springbootmvcshopping.service.member.MemberDetailService;
 import springbootmvcshopping.service.member.MemberListService;
 
 @Controller
@@ -29,6 +31,8 @@ public class MemberController {
 	MemberListService memberListService;
 	@Autowired
 	MemberDeleteService memberDeleteService;
+	@Autowired
+	MemberDetailService memberDetailService;
 	
 	@GetMapping("memberList")
 	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
@@ -68,5 +72,12 @@ public class MemberController {
 	public String memberDelete(@RequestParam("nums") String memberNums []) {
 		memberDeleteService.execute(memberNums);
 		return "redirect:memberList";
+	}
+	
+	// PathVariable(주소변경)
+	@GetMapping("memberDetail/{memberNum}")
+	public String memberDetail(@PathVariable("memberNum") String memberNum, Model model) {
+		memberDetailService.execute(memberNum, model);
+		return "thymeleaf/member/memberInfo";
 	}
 }

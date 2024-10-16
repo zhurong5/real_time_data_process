@@ -12,4 +12,5 @@ public interface MemberMapper {
 	public void memberInsert(MemberDTO dto);
 	public List<MemberDTO> memberSelectList(StartEndPageDTO sepDTO);
 	public int memberCount();
+	public MemberDTO memberSelectOne(String memberNum);
 }
