@@ -1,19 +1,20 @@
 package springbootmvcshopping.service.member;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
+import springbootmvcshopping.command.MemberCommand;
 import springbootmvcshopping.domain.MemberDTO;
 import springbootmvcshopping.mapper.MemberMapper;
 
 @Service
-public class MemberDetailService {
+public class MemberUpdateService {
 	@Autowired
 	MemberMapper memberMapper;
-	public void execute(Model model, String memberNum) {
-		MemberDTO dto = memberMapper.memberSelectOne(memberNum);
-		model.addAttribute("memberCommand", dto);
-		
+	public void execute(MemberCommand memberCommand) {
+		MemberDTO dto = new MemberDTO();
+		BeanUtils.copyProperties(memberCommand, dto);
+		memberMapper.memberUpdate(dto);
 	}
 }

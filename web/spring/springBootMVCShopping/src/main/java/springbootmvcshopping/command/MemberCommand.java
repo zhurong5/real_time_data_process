@@ -40,6 +40,9 @@ public class MemberCommand {
 	@DateTimeFormat(pattern = "yyyy-mm-dd") // == SimpleDateFormet
 	Date memberBirth;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date memberRegist;
+	
 	public boolean isMemberPwEqualmemberPwCon() { // 개발자규칙: 그냥리턴 == get, true/false 리턴 == is
 		return memberPw.equals(memberPwCon);
 	}

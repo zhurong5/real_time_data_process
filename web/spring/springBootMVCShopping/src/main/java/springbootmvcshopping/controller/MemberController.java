@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import springbootmvcshopping.command.MemberCommand;
+import springbootmvcshopping.domain.MemberDTO;
 import springbootmvcshopping.service.AutoNumService;
 import springbootmvcshopping.service.member.MemberWriteService;
+import springbootmvcshopping.service.member.MembersDeleteService;
 import springbootmvcshopping.service.member.MemberDeleteService;
 import springbootmvcshopping.service.member.MemberDetailService;
 import springbootmvcshopping.service.member.MemberListService;
+import springbootmvcshopping.service.member.MemberUpdateService;
 
 @Controller
 @RequestMapping("member") // 공통주소 처리
@@ -30,9 +33,13 @@ public class MemberController {
 	@Autowired
 	MemberListService memberListService;
 	@Autowired
-	MemberDeleteService memberDeleteService;
+	MembersDeleteService membersDeleteService;
 	@Autowired
 	MemberDetailService memberDetailService;
+	@Autowired
+	MemberUpdateService memberUpdateService;
+	@Autowired
+	MemberDeleteService memberDeleteService;
 	
 	@GetMapping("memberList")
 	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
@@ -69,15 +76,39 @@ public class MemberController {
 		return "redirect:memberList";
 	}
 	@RequestMapping(value = "membersDelete")
-	public String memberDelete(@RequestParam("nums") String memberNums []) {
-		memberDeleteService.execute(memberNums);
+	public String membersDelete(@RequestParam("nums") String memberNums []) {
+		membersDeleteService.execute(memberNums);
 		return "redirect:memberList";
 	}
 	
 	// PathVariable(주소변경)
 	@GetMapping("memberDetail/{memberNum}")
-	public String memberDetail(@PathVariable("memberNum") String memberNum, Model model) {
-		memberDetailService.execute(memberNum, model);
+	public String memberDetail(@PathVariable("memberNum") String memberNum
+			,Model model) {
+		memberDetailService.execute(model, memberNum);
 		return "thymeleaf/member/memberInfo";
 	}
+	
+	@GetMapping("memberUpdate")
+	public String memberUpdate(String memberNum, Model model) {
+		memberDetailService.execute(model, memberNum);
+		return "thymeleaf/member/memberModify";
+	}
+	
+	@PostMapping("memberUpdate")
+	public String memberupdate(@Validated MemberCommand memberCommand
+			,BindingResult result) {
+		if (result.hasErrors()) {
+			return "thymeleaf/member/memberModify";
+		}
+		memberUpdateService.execute(memberCommand);
+		return "redirect:memberDetail/"+memberCommand.getMemberNum();
+	}
+	
+	@GetMapping("memberDelete/{memberNum}")
+	public String memberDelete(@PathVariable("memberNum") String memberNum) {
+		memberDeleteService.execute(memberNum);
+		return "redirect:../memberList";
+	}
+	
 }

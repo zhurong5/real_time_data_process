@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springbootmvcshopping.service.EmailCheckService;
 
+//spring boot
 @RestController
 public class CheckRestController {
 	@Autowired
 	EmailCheckService emailCheckService;
 	@PostMapping("/checkRest/userEmailCheck")
 	public Integer emailCheck(String userEmail) {
-		emailCheckService.execute(userEmail);
-		return 1;
+		return emailCheckService.execute(userEmail);
 	}
 }
