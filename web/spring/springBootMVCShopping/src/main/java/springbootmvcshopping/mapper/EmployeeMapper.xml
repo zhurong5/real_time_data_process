@@ -47,7 +47,12 @@
 	UPDATE employees
 	SET emp_name = #{empName},
     	emp_addr = #{empAddr},
+    	<if test="memberAddrDetail != null">
     	emp_addr_detail = #{empAddrDetail},
+    	</if>
+    	<if test="memberAddrDetail == null">
+    	emp_addr_detail = null,
+    	</if>
     	emp_post = #{empPost},
     	emp_phone = #{empPhone},
     	emp_email = #{empEmail},
