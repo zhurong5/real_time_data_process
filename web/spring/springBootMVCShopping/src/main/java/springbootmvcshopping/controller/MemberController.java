@@ -69,7 +69,7 @@ public class MemberController {
 		if (!memberCommand.isMemberPwEqualmemberPwCon()) {
 			// model.addAttribute("errPw","비밀번호가 일치하지 않습니다.");
 			result.rejectValue("memberPwCon", "memberCommand.memberPwCon", 
-					"비밀번호가 일치하지 않습니다.");
+					"비밀번호가 일치하지 않습니다."); 
 			return "thymeleaf/member/memberForm";
 		}
 		memberWriteService.execute(memberCommand);

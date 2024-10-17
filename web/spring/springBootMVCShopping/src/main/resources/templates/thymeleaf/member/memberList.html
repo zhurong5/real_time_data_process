@@ -27,7 +27,7 @@
 			<td>이름</td>
 			<td>아이디</td>
 			<td>등록일</td>
-			<td><button type="button">선택 삭제</button></td>
+			<td><button type="submit">선택 삭제</button></td>
 		</tr>
 		<tr th:each="dto : ${list}">
 			<td><input type="checkbox" name="nums" th:value="${dto.memberNum}"></td>

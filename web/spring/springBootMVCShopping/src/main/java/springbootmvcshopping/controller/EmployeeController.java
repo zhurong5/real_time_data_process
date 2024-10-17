@@ -19,6 +19,7 @@ import springbootmvcshopping.service.employee.EmployeeDetailService;
 import springbootmvcshopping.service.employee.EmployeeListService;
 import springbootmvcshopping.service.employee.EmployeeUpdateService;
 import springbootmvcshopping.service.employee.EmployeeWriteService;
+import springbootmvcshopping.service.employee.EmployeesDeleteService;
 
 @Controller
 @RequestMapping("employee")
@@ -35,6 +36,8 @@ public class EmployeeController {
 	EmployeeUpdateService employeeUpdateService;
 	@Autowired
 	EmployeeDeleteService employeeDeleteService;
+	@Autowired
+	EmployeesDeleteService EmployeesDeleteService;
 	
 	@GetMapping("employeeList")
 	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
@@ -89,5 +92,10 @@ public class EmployeeController {
 	public String employeeDelete(@PathVariable("empNum") String empNum) {
 		employeeDeleteService.execute(empNum);
 		return "redirect:../employeeList";
+	}
+	@RequestMapping(value = "employeesDelete")
+	public String employeesDelete(@RequestParam("nums") String empNums[] ) {
+		EmployeesDeleteService.execute(empNums);
+		return "redirect:employeeList";
 	}
 }

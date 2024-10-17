@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>employeeList.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
 </head>
 <body>
 	<a href="employeeWrite">직원등록</a><br />
@@ -17,18 +19,24 @@
 			</td>
 		 </tr>
 		</form>
+		<form action="employeesDelete" method="post" id="frm">
 		<tr>
+			<td><input type="checkbox" id="checkBoxs"></td>
 			<td>번호</td>
 			<td>이름</td>
 			<td>아이디</td>
 			<td>고용일</td>
+			<td><button type="submit">선택 삭제</button></td>
 		</tr>
 		<tr th:each="dto : ${list}">
+			<td><input type="checkbox" name="nums" th:value="${dto.empNum}"></td>
 			<td><a th:href="|employeeDetail/${dto.empNum}|">[[${dto.empNum}]]</a></td>
 			<td><a th:href="|employeeDetail/${dto.empNum}|">[[${dto.empName}]]</a></td>
 			<td>[[${dto.empId}]]</td>
 			<td>[[${#dates.format(dto.empHireDate, 'yyyy-MM-dd')}]]</td>
+			<td><button type="button" th:attr="onclick=|javascript:location.href='employeesDelete?nums=${dto.empNum}'|">삭제</button></td>
 		</tr>
+		</form>
 		<tr>
 			<th colspan="6">
 				<span th:if="${page <= 1}">[이전]</span>
