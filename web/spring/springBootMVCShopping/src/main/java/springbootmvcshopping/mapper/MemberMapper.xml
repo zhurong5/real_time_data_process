@@ -26,8 +26,8 @@
 <select id="memberSelectList" resultType="memberDTO" parameterType="startEndPageDTO">
 	select *
 		from (select ROW_NUMBER() over (order by member_num ) as rn  
-	    ,<include refid="memberBaseColumns"/>
-	from members
+	    		,<include refid="memberBaseColumns"/>
+				from members
 	<where> 
 		<if test="searchWord != null">
 			MEMBER_NAME like '%'||#{searchWord}||'%'

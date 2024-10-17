@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>employeeList.html</title>
+</head>
+<body>
+	<a href="employeeWrite">직원등록</a><br />
+	직원수 : [[${count}]]<br />
+	<table border="1" width="600">
+		<tr>
+			<td>번호</td>
+			<td>이름</td>
+			<td>아이디</td>
+			<td>고용일</td>
+		</tr>
+		<tr th:each="dto : ${list}">
+			<td><a th:href="|employeeDetail/${dto.empNum}|">[[${dto.empNum}]]</a></td>
+			<td><a th:href="|employeeDetail/${dto.empNum}|">[[${dto.empName}]]</a></td>
+			<td>[[${dto.empId}]]</td>
+			<td>[[${#dates.format(dto.empHireDate, 'yyyy-MM-dd')}]]</td>
+		</tr>
+	</table>
+</body>
+</html>

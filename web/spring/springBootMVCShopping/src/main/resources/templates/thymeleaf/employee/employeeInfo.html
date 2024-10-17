@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>employeeInfo.html</title>
+</head>
+<body>
+직원 상세 정보 <br />
+직원번호 : [[${employeeCommand.empNum}]]<br />
+직원명 : [[${employeeCommand.empName }]]<br />
+직원아이디: [[${employeeCommand.empId }]]<br />
+직원연락처: [[${employeeCommand.empPhone }]]<br />
+직원이메일: [[${employeeCommand.empEmail }]]<br />
+직원주소: [[${employeeCommand.empAddr }]]<br />
+직원상세주소: [[${employeeCommand.empAddrDetail }]]<br />
+직원우편번호: [[${employeeCommand.empPost }]]<br />
+직원주민번호: [[${employeeCommand.empJumin }]]<br />
+직원입사일: [[${#dates.format(employeeCommand.empHireDate, 'yyyy-MM-dd') }]]<br />
+<a th:href="@{../employeeUpdate(empNum=${employeeCommand.empNum })}">직원정보수정</a> | 
+<a th:href="|../employeeDelete/*{empNum}|">직원삭제 | 
+<a href="../employeeList">직원목록</a>
+</body>
+</html>
