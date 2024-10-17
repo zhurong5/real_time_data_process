@@ -8,6 +8,15 @@
 	<a href="employeeWrite">직원등록</a><br />
 	직원수 : [[${count}]]<br />
 	<table border="1" width="600">
+		<form action="employeeList" method="get">
+		 <tr>
+			<td colspan="6">
+				직원검색 : 
+				<input type="search" name="searchWord" size="60" th:value="${searchWord}">
+				<input type="submit" value="검색">
+			</td>
+		 </tr>
+		</form>
 		<tr>
 			<td>번호</td>
 			<td>이름</td>
@@ -19,6 +28,22 @@
 			<td><a th:href="|employeeDetail/${dto.empNum}|">[[${dto.empName}]]</a></td>
 			<td>[[${dto.empId}]]</td>
 			<td>[[${#dates.format(dto.empHireDate, 'yyyy-MM-dd')}]]</td>
+		</tr>
+		<tr>
+			<th colspan="6">
+				<span th:if="${page <= 1}">[이전]</span>
+				<span th:if="${page > 1}">
+					<a th:href="|employeeList?page=${page-1}&searchWord=${searchWord}|">[이전]</a>
+				</span>
+				<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+					<a th:href="|employeeList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>
+				</th:block>
+				<span th:if="${page < maxPage}">
+					<a th:href="@{employeeList(page=${page+1},searchWord=${searchWord})}">[다음]</a>
+				</span>			
+				<span th:if="${page >= maxPage}">[다음]</span>
+				
+			</th>
 		</tr>
 	</table>
 </body>

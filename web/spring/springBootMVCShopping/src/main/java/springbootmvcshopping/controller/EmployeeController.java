@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import springbootmvcshopping.command.EmployeeCommand;
 import springbootmvcshopping.command.MemberCommand;
@@ -36,8 +37,11 @@ public class EmployeeController {
 	EmployeeDeleteService employeeDeleteService;
 	
 	@GetMapping("employeeList")
-	public String list(Model model) {
-		employeeListService.execute(model);
+	public String list(@RequestParam(value = "searchWord", required = false) String searchWord,
+					   @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+			
+			Model model) {
+		employeeListService.execute(page, searchWord, model);
 		return "thymeleaf/employee/employeeList";
 	}
 	@GetMapping("employeeWrite")

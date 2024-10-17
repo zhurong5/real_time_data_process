@@ -17,9 +17,24 @@
 		  ,#{empJumin}, #{empHireDate})
 </insert>
 
-<select id="employeeSelectList" resultType="employeeDTO">
-	select <include refid="employeeBaseColumns"/>
-	from employees
+<select id="employeeSelectList" resultType="employeeDTO" parameterType="startEndPageDTO">
+	select * 
+	from (select ROW_NUMBER() over (order by emp_num ) as rn, 
+			<include refid="employeeBaseColumns"/>
+			from employees
+	<where> 
+		<if test="searchWord != null">
+			emp_NAME like '%'||#{searchWord}||'%'
+			or emp_ID like '%'||#{searchWord}||'%'
+			or emp_NUM like '%'||#{searchWord}||'%'
+		</if>
+	</where>
+	)
+	where rn BETWEEN #{startRow} and #{endRow}
+</select>
+
+<select id="employeeCount" resultType="integer">
+	select count(*) from employees
 </select>
 
 <select id="employeeSelectOne" resultType="employeeDTO" parameterType="string">
