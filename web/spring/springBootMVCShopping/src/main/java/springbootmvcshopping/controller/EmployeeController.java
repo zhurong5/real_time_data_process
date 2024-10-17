@@ -3,6 +3,7 @@ package springbootmvcshopping.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +50,14 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("employeeRegist")
-	public String write(EmployeeCommand employeeCommand) {
+	public String write(@Validated EmployeeCommand employeeCommand, BindingResult result) {
+		if (result.hasErrors()) {
+			return "thymeleaf/employee/employeeForm";
+		}
+		if (!employeeCommand.isEmployeePwEqualEmployeePwCon()) {
+			result.rejectValue("empPwCon", "employeeCommand.empPwCon", "비밀번호가 일치하지 않습니다");
+			return "thymeleaf/employee/employeeForm";
+		}
 		employeeWriteService.execute(employeeCommand);
 		return "redirect:employeeList";
 	}
