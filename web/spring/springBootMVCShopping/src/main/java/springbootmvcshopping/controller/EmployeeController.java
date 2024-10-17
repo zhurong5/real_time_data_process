@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import springbootmvcshopping.command.EmployeeCommand;
+import springbootmvcshopping.command.MemberCommand;
+import springbootmvcshopping.service.AutoNumService;
 import springbootmvcshopping.service.employee.EmployeeDeleteService;
 import springbootmvcshopping.service.employee.EmployeeDetailService;
 import springbootmvcshopping.service.employee.EmployeeListService;
@@ -19,6 +21,8 @@ import springbootmvcshopping.service.employee.EmployeeWriteService;
 @Controller
 @RequestMapping("employee")
 public class EmployeeController {
+	@Autowired
+	AutoNumService autoNumService;
 	@Autowired
 	EmployeeWriteService employeeWriteService;
 	@Autowired
@@ -36,8 +40,11 @@ public class EmployeeController {
 		return "thymeleaf/employee/employeeList";
 	}
 	@GetMapping("employeeWrite")
-	public String write() {
-		
+	public String write(Model model) {
+		String autoNum = autoNumService.execute("emp_", "emp_num", 5, "employees");
+		EmployeeCommand employeeCommand = new EmployeeCommand();
+		employeeCommand.setEmpNum(autoNum);
+		model.addAttribute("employeeCommand", employeeCommand);
 		return "thymeleaf/employee/employeeForm";
 	}
 	

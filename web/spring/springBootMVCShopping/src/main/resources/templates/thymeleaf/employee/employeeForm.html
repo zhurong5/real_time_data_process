@@ -9,7 +9,7 @@
 <form action="employeeRegist" name="frm" method="post">
 	<table border=1>
 		<tr><th>직원번호</th>
-			<td><input type="text" name="empNum"  value="${empNum }" 
+			<td><input type="text" name="empNum"  th:value="${employeeCommand.empNum }" 
 				 /> :자동부여 </td></tr>
 		<tr><th>직원이름</th>
 			<td><input type="text" name="empName"/></td></tr>
