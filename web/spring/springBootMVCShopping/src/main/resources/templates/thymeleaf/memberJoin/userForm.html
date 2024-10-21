@@ -9,12 +9,13 @@
 </head>
 <body>
 	회원가입페이지
-	<form action="userWrite" method="post">
-	회원아이디 : <input type="text" name="memberId" id="userId"><br />
+	<form action="userWrite" method="post" th:object="${userCommand}">
+	회원아이디 : <input type="text" name="memberId" id="userId" th:value="${userCommand.memberId}">
+			  <span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
 	회원비밀번호 : <input type="password" name="memberPw"><br />
 	회원비밀번호확인 : <input type="password" name="memberPwcon"><br />
-	회원명 : <input type="text" name="memberName"><br />
-	회원주소 : <input type="text" name="memberAddr"id="sample4_roadAddress" readonly="readonly">
+	회원명 : <input type="text" name="memberName" th:field="*{memberName}" ><br />
+	회원주소 : <input type="text" name="memberAddr"id="sample4_roadAddress" th:field="*{memberAddr}" readonly="readonly">
 	<button type="button" onclick="execDaumPostcode();">우편번호검색</button><br />
 	상세주소 : <input type="text" name="memberAddrDetail"><br />
 	우편번호 : <input type="text" name="memberPost" id="sample4_postcode" readonly="readonly"><br />
