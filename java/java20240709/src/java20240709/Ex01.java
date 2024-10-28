@@ -8,6 +8,5 @@ public class Ex01 {
 		System.out.println(i);
 		i = 20; // 대입
 		System.out.println(i);
-		
-	}
+		}
 }
