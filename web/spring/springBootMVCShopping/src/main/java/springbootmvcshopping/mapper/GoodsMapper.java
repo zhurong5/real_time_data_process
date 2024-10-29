@@ -15,12 +15,11 @@ public interface GoodsMapper {
 	public List<GoodsDTO> allSelect(StartEndPageDTO sepDTO);
 	public int goodsCount(String searchWord);
 	
-	
-	
 	public int productsDelete(@Param("products") String products[]);
 	public GoodsDTO selectOne(String goodsNum);
 	public int goodsUpdate(GoodsDTO dto);
 	public int goodsDelete(String goodsNum);
+	
 }
 
 
