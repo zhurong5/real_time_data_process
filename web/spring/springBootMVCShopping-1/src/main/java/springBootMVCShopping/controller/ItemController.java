@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import springBootMVCShopping.command.CartCommand;
 import springBootMVCShopping.service.item.CartInsertService;
 import springBootMVCShopping.service.item.CartListService;
+import springBootMVCShopping.service.item.GoodsCartDelsService;
 import springBootMVCShopping.service.item.GoodsWishListService;
 
 @Controller
@@ -22,6 +23,9 @@ public class ItemController {
 	CartListService cartListService;
 	@Autowired
 	CartInsertService cartInsertService;
+	@Autowired
+	GoodsCartDelsService goodsCartDelsService;
+	
 	@GetMapping("wishList")
 	public String wishList(HttpSession session, Model model) {
 		goodsWishListService.execute(session, model);
@@ -31,6 +35,12 @@ public class ItemController {
 	public String cartList(Model model, HttpSession session) {
 		cartListService.execute(model, session);
 		return "thymeleaf/item/cartList";
+	}
+	
+	@GetMapping("cartDel")
+	public String cartDel(String goodsNums[], HttpSession session) {
+		goodsCartDelsService.execute(goodsNums, session);
+		return "redirect:cartList";
 	}
 	
 }
